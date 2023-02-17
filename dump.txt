@@ -1,0 +1,210 @@
+function HomeScreen({ navigation }) {
+  const [image, SetImage] = React.useState()
+  React.useEffect(() => {
+    if (image) {
+      //console.log(imageGlobal);
+    }
+    (async () => {
+      if (image) {
+        resultImage = (await TextRecognition.recognize(image.assets[0].uri));
+        resultString = (JSON.stringify(resultImage))
+        console.log(resultString)
+        NRGET = resultString.search("NR")
+        NRGET2 = resultString.search("NR")
+        resultNR = resultString.slice(NRGET + 2, NRGET2 + 9)
+
+        EXPIRED = resultString.search("-")
+        EXPIRED2 = resultString.search("-")
+
+        resultEXPIRED = resultString.slice(EXPIRED + 1, EXPIRED2 + 11)
+        resultDATE = new Date().toLocaleDateString()
+
+        LASTNAMEGET = resultString.search("Last")
+        LASTNAMEGET2 = resultString.search("Prenume")
+        res_LASTNAMEGET = resultString.slice(LASTNAMEGET + 11, LASTNAMEGET2 - 2)
+
+        FIRSTNAMEGET = resultString.search("First")
+        FIRSTNAMEGET2 = resultString.search("Cet")
+        res_FIRSTNAMEGET = resultString.slice(FIRSTNAMEGET + 12, FIRSTNAMEGET2 - 2)
+
+
+
+        ADDRESSGET = resultString.search("Adresse")
+        ADDRESSGET2 = resultString.search("Emisa")
+        res_ADDRESSGET = resultString.slice(ADDRESSGET + 17, ADDRESSGET2 - 2)
+        if (res_ADDRESSGET.length >= 70) {
+          ADDRESSGET = resultString.search("Adresse")
+          ADDRESSGET2 = resultString.search("Sex")
+          res_ADDRESSGET = resultString.slice(ADDRESSGET + 17, ADDRESSGET2 - 2)
+        }
+        alert(res_ADDRESSGET)
+
+        NAMEGET = (res_FIRSTNAMEGET + " " + res_LASTNAMEGET)
+
+        CNPGET = resultString.search("CNP")
+        CNPGET2 = resultString.search("CNP")
+        res_CNPGET = resultString.slice(CNPGET + 4, CNPGET2 + 17)
+        alert(res_CNPGET)
+      }
+    })();
+  }, [image])
+  const fromGallery = async () => {
+    launchImageLibrary({}, SetImage);
+    imageGlobal = image
+    bol = true
+  }
+  const fromCamera = () => {
+    launchCamera({}, SetImage)
+    imageGlobal = image
+
+  }
+  const parseFile = () => {
+    resultFile = resultFile.replace("[@ no ]", resultNR)
+    resultFile = resultFile.replace("[@ date ]", resultDATE)
+    resultFile = resultFile.replace("[@ name ]", NAMEGET)
+    resultFile = resultFile.replace("[@ address ]", res_ADDRESSGET)
+    resultFile = resultFile.replace("[@ expired ]", resultEXPIRED)
+    resultFile = resultFile.replace("[@ cnp ]", res_CNPGET)
+    resultFile = resultFile.replace("[@ no ]", resultNR)
+    resultFile = resultFile.replace("[@ date ]", resultDATE)
+    resultFile = resultFile.replace("[@ name ]", NAMEGET)
+    resultFile = resultFile.replace("[@ address ]", res_ADDRESSGET)
+    resultFile = resultFile.replace("[@ expired ]", resultEXPIRED)
+    resultFile = resultFile.replace("[@ cnp ]", res_CNPGET)
+    resultFile = resultFile.replace("[@ no ]", resultNR)
+    resultFile = resultFile.replace("[@ date ]", resultDATE)
+    resultFile = resultFile.replace("[@ name ]", NAMEGET)
+    resultFile = resultFile.replace("[@ address ]", res_ADDRESSGET)
+    resultFile = resultFile.replace("[@ expired ]", resultEXPIRED)
+    resultFile = resultFile.replace("[@ cnp ]", res_CNPGET)
+    resultFile = resultFile.replace("[@ no ]", resultNR)
+    resultFile = resultFile.replace("[@ date ]", resultDATE)
+    resultFile = resultFile.replace("[@ name ]", NAMEGET)
+    resultFile = resultFile.replace("[@ address ]", res_ADDRESSGET)
+    resultFile = resultFile.replace("[@ expired ]", resultEXPIRED)
+    resultFile = resultFile.replace("[@ cnp ]", res_CNPGET)
+    resultFile = resultFile.replace("[@ no ]", resultNR)
+    resultFile = resultFile.replace("[@ date ]", resultDATE)
+    resultFile = resultFile.replace("[@ name ]", NAMEGET)
+    resultFile = resultFile.replace("[@ address ]", res_ADDRESSGET)
+    resultFile = resultFile.replace("[@ expired ]", resultEXPIRED)
+    resultFile = resultFile.replace("[@ cnp ]", res_CNPGET)
+    resultFile = resultFile.replace("[@ no ]", resultNR)
+    resultFile = resultFile.replace("[@ date ]", resultDATE)
+    resultFile = resultFile.replace("[@ name ]", NAMEGET)
+    resultFile = resultFile.replace("[@ address ]", res_ADDRESSGET)
+    resultFile = resultFile.replace("[@ expired ]", resultEXPIRED)
+    resultFile = resultFile.replace("[@ cnp ]", res_CNPGET)
+    resultFile = resultFile.replace("[@ no ]", resultNR)
+    resultFile = resultFile.replace("[@ date ]", resultDATE)
+    resultFile = resultFile.replace("[@ name ]", NAMEGET)
+    resultFile = resultFile.replace("[@ address ]", res_ADDRESSGET)
+    resultFile = resultFile.replace("[@ expired ]", resultEXPIRED)
+    resultFile = resultFile.replace("[@ cnp ]", res_CNPGET)
+    resultFile = resultFile.replace("[@ no ]", resultNR)
+    resultFile = resultFile.replace("[@ date ]", resultDATE)
+    resultFile = resultFile.replace("[@ name ]", NAMEGET)
+    resultFile = resultFile.replace("[@ address ]", res_ADDRESSGET)
+    resultFile = resultFile.replace("[@ expired ]", resultEXPIRED)
+    resultFile = resultFile.replace("[@ cnp ]", res_CNPGET)
+
+    firstInput = resultFile.indexOf("!")
+    resultInput1 = resultFile.slice(0, firstInput)
+    resultFile = resultFile.replace(/!/, "")
+
+    place_1 = resultFile.indexOf("[")
+    place_11 = resultFile.indexOf("]")
+    res_place1 = resultFile.slice(place_1, place_11 + 1)
+    resultFile = resultFile.replace(res_place1, "")
+
+    secondInput = resultFile.indexOf("!")
+    resultInput2 = resultFile.slice(firstInput, secondInput)
+    resultFile = resultFile.replace(/!/, "")
+
+    place_2 = resultFile.indexOf("[")
+    place_22 = resultFile.indexOf("]")
+    res_place2 = resultFile.slice(place_2, place_22 + 1)
+    resultFile = resultFile.replace(res_place2, "")
+
+    thirdInput = resultFile.indexOf("!")
+    resultInput3 = resultFile.slice(secondInput, thirdInput)
+    resultFile = resultFile.replace(/!/, "")
+
+    place_3 = resultFile.indexOf("[")
+    place_33 = resultFile.indexOf("]")
+    res_place3 = resultFile.slice(place_3, place_33 + 1)
+    resultFile = resultFile.replace(res_place3, "")
+
+    fourthInput = resultFile.indexOf("!")
+    resultInput4 = resultFile.slice(thirdInput, fourthInput)
+    resultFile = resultFile.replace(/!/, "")
+
+    place_4 = resultFile.indexOf("[")
+    place_44 = resultFile.indexOf("]")
+    res_place4 = resultFile.slice(place_4, place_44 + 1)
+    resultFile = resultFile.replace(res_place4, "")
+
+    fifthInput = resultFile.indexOf("!")
+
+    resultInput5 = resultFile.slice(fourthInput, 9999999)
+
+
+    contentAfterParsed = resultInput1 + resultInput2 + resultInput3 + resultInput4 + resultInput5
+    if (fifthInput == -1 || fourthInput == -1) {
+      stop = false
+      resultInput5 = resultFile.slice(fourthInput, 9999999)
+    }
+
+  }
+  const Picker2 = async () => {
+    try {
+      const res = await DocumentPicker.pickSingle({
+        type: [DocumentPicker.types.allFiles]
+      })
+      var nameRes = JSON.stringify(res.name)
+      nameRes = nameRes.substring(1)
+      nameRes = nameRes.slice(0, -1)
+      RNFS.readDir(RNFS.DownloadDirectoryPath)
+        .then((statResult) => {
+          if (statResult[0].isFile()) {
+            //statResult[1]
+            return RNFS.readFile(RNFS.DownloadDirectoryPath + '/' + nameRes, 'utf8');
+            //return RNFS.readFile(RNFS.DownloadDirectoryPath+'/example.docx', 'utf8');
+          }
+          return 'no file';
+        })
+        .then((contents) => {
+          console.log("contents", contents);
+          resultFile = contents
+          parseFile()
+          navigation.navigate("File")
+
+        })
+
+    } catch (err) {
+      if (DocumentPicker.isCancel) {
+        console.log("Canceld")
+        navigation.navigate("File")
+
+      } else { console.log("UNKNOW ERROR", err) }
+    }
+  }
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
+      <Button
+        title='YOU MUST PICK YOUR IMAGE (OPEN GALLERY )'
+        onPress={fromGallery}
+      />
+      <Button
+        title='USE YOUR CAMERA'
+        onPress={fromCamera}
+      />
+      <Button
+        title="THEN Pick your file"
+        onPress={Picker2}
+
+      />
+
+    </View>
+  );
+}
